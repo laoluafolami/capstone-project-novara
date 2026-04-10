@@ -1,280 +1,261 @@
-# TaskApp Capstone Project
+# TaskApp - Cloud-Native Task Management Platform
 
-A complete full-stack task management application with local Docker development and AWS Kubernetes deployment.
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-1.28-blue?logo=kubernetes)](https://kubernetes.io)
+[![SSL](https://img.shields.io/badge/SSL-Let's%20Encrypt-green)](https://letsencrypt.org)
+[![HA](https://img.shields.io/badge/High%20Availability-Multi--AZ-orange)]()
+
+**Capstone Project: Production-Grade AWS Kubernetes Infrastructure**
+
+A production-grade, cloud-native task management application deployed on AWS with Infrastructure as Code, automated SSL certificates, multi-AZ resilience, and enterprise-grade security.
+
+
+<img width="1710" height="772" alt="image" src="https://github.com/user-attachments/assets/df0e4fbc-b1f4-4985-84d2-3620e1727655" />
+*Figure 1: TaskApp frontend with HTTPS green padlock at https://task-app.online*
+
+---
+
+## 📋 Table of Contents
+
+- [Project Overview](#project-overview)
+- [Live Application](#live-application)
+- [Architecture Summary](#architecture-summary)
+- [Quick Start](#quick-start)
+- [Validation Evidence](#validation-evidence)
+- [Documentation](#documentation)
+- [Cost Analysis](#cost-analysis)
+- [Submission Checklist](#submission-checklist)
+
+---
+
+## 🎯 Project Overview
+
+### Challenge Statement
+
+Design, build, and deploy a highly available, secure, and scalable Kubernetes cluster on AWS that hosts TaskApp with zero single points of failure, automated SSL/TLS, and Infrastructure as Code practices.
+
+### Solution Summary
+
+| Attribute | Implementation |
+|-----------|----------------|
+| **Application** | TaskApp - Team Task Manager (React + Flask + PostgreSQL) |
+| **Frontend** | React 18 + Vite + TypeScript |
+| **Backend** | Python 3.11 + Flask + SQLAlchemy |
+| **Database** | PostgreSQL 15 (StatefulSet + PVC) |
+| **Orchestration** | Kubernetes 1.28 via kops |
+| **IaC Tool** | Terraform (planned) / kops (implemented) |
+| **Cloud Provider** | AWS (us-east-1) |
+| **SSL/TLS** | Let's Encrypt via cert-manager |
+| **Ingress** | NGINX Ingress Controller |
+| **Domain** | task-app.online |
+
+### Key Features Achieved
+
+✅ **High Availability**
+- 3 master nodes across 3 AZs (us-east-1a/b/c)
+- 3 worker nodes across 3 AZs
+- Multi-replica backend deployment
+- Pod anti-affinity for AZ distribution
+
+✅ **Production Security**
+- Let's Encrypt SSL certificates with auto-renewal
+- HTTPS enforcement with HTTP→HTTPS redirect
+- IAM least-privilege roles
+- Secrets management via Kubernetes Secrets
+
+✅ **Scalability**
+- Horizontal Pod Autoscaling ready
+- Stateless backend design
+- EBS gp3 persistent storage
+
+✅ **Observability**
+- Health check endpoints (`/api/health`)
+- Kubernetes readiness/liveness probes
+- Structured logging
+
+---
+
+## 🌐 Live Application
+
+### Endpoints
+
+| Service | URL | Status |
+|---------|-----|--------|
+| **Frontend** | https://task-app.online | ✅ Live |
+| **Backend API** | https://api.task-app.online/api/health | ✅ Live |
+
+### Screenshot Gallery
+
+**Figure 2: Frontend with valid SSL Certificate**
+<img width="1710" height="772" alt="image" src="https://github.com/user-attachments/assets/df0e4fbc-b1f4-4985-84d2-3620e1727655" />
+*TaskApp frontend accessible via HTTPS with valid SSL certificate*
+
+**Figure 3: Backend API Health Check**
+<img width="629" height="167" alt="image" src="https://github.com/user-attachments/assets/ad380976-0e9f-43ee-bfe9-e79916b86a54" />
+*Backend API returning healthy status with database connection*
+
+---
+
+## 🏗️ Architecture Summary
+
+### High-Level Architecture
+
+<img width="1650" height="870" alt="image" src="https://github.com/user-attachments/assets/32dc205b-5343-45d8-8356-0c9625fe94be" />
+
+**Network Flow:**
+1. User accesses `https://task-app.online`
+2. DNS resolves via Route53 to AWS Network Load Balancer
+3. NLB routes to NGINX Ingress Controller
+4. Ingress routes `/api/*` to backend-service, `/` to frontend-service
+5. Backend connects to PostgreSQL via ClusterIP service
+
+**Figure 4: System Architecture Diagram**
+![Architecture Diagram](screenshots/architecture/architecture-diagram.png)
+*Complete system architecture showing component interactions*
+
+For detailed architecture, see [docs/architecture.md](docs/architecture.md).
+
+---
 
 ## 🚀 Quick Start
 
-### Local Development (5 minutes)
-```powershell
-cd "C:\Users\YourUsername\Documents\2026 Projects\capstone-project-novara"
-docker-compose up -d
-# Open http://localhost:3000
+### Prerequisites
+
+- AWS account with IAM permissions
+- kops 1.28+ installed
+- kubectl configured
+- Docker installed
+- Domain name registered (task-app.online)
+
+### Deployment Steps
+
+#### 1. Clone Repository
+
+```bash
+git clone https://github.com/yourusername/capstone-taskapp.git
+cd capstone-taskapp
 ```
 
-### AWS Deployment (3-4 hours)
-Follow the comprehensive guides in the `docs/` folder.
-
----
-
-## 📚 Documentation
-
-All documentation is organized in the `docs/` folder:
-
-### Getting Started
-- **[docs/START_HERE.md](docs/START_HERE.md)** - Quick 2-minute start
-- **[docs/QUICK_START.md](docs/QUICK_START.md)** - Essential commands
-- **[docs/STEP_BY_STEP_VISUAL.md](docs/STEP_BY_STEP_VISUAL.md)** - Visual guide with examples
-
-### Local Development
-- **[docs/LOCAL_DEVELOPMENT_SETUP.md](docs/LOCAL_DEVELOPMENT_SETUP.md)** - Complete 10-step setup
-- **[docs/FIXES_APPLIED.md](docs/FIXES_APPLIED.md)** - Technical details of fixes
-- **[docs/SETUP_COMPLETE.md](docs/SETUP_COMPLETE.md)** - Verification checklist
-- **[docs/README_LOCAL_SETUP.md](docs/README_LOCAL_SETUP.md)** - Master overview
-
-### AWS Deployment
-- **[docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md)** - AWS deployment overview
-- **[docs/guide/00-overview.md](docs/guide/00-overview.md)** - Architecture & concepts
-- **[docs/guide/01-prerequisites.md](docs/guide/01-prerequisites.md)** through **[docs/guide/19-final-checklist.md](docs/guide/19-final-checklist.md)** - 20 detailed step-by-step guides
-
-### Special Topics
-- **[docs/SUBDOMAIN_SETUP_GUIDE.md](docs/SUBDOMAIN_SETUP_GUIDE.md)** - Using a subdomain (e.g., taskapp.benbolpharmacy.com)
-- **[docs/AWS_DEPLOYMENT_COMPATIBILITY.md](docs/AWS_DEPLOYMENT_COMPATIBILITY.md)** - Compatibility with AWS deployment
-- **[docs/READY_FOR_AWS.md](docs/READY_FOR_AWS.md)** - Pre-deployment checklist
-
-### Reference
-- **[docs/INDEX.md](docs/INDEX.md)** - Complete index of all documents
-- **[docs/COMPLETION_SUMMARY.md](docs/COMPLETION_SUMMARY.md)** - What was accomplished
-- **[docs/FINAL_SUMMARY.txt](docs/FINAL_SUMMARY.txt)** - Quick reference summary
-
----
-
-## 📁 Project Structure
-
+### 2. Configure Environment
+### Create environment configuration
 ```
-capstone-project-novara/
-├── README.md                          ← You are here
-├── docker-compose.yml                 ← Local development
-│
-├── docs/                              ← All documentation
-│   ├── START_HERE.md
-│   ├── QUICK_START.md
-│   ├── STEP_BY_STEP_VISUAL.md
-│   ├── LOCAL_DEVELOPMENT_SETUP.md
-│   ├── DEPLOYMENT_GUIDE.md
-│   ├── SUBDOMAIN_SETUP_GUIDE.md
-│   ├── guide/                         ← 20 AWS deployment guides
-│   │   ├── 00-overview.md
-│   │   ├── 01-prerequisites.md
-│   │   ├── ... (16 more files)
-│   │   └── 19-final-checklist.md
-│   └── ... (other documentation)
-│
-├── taskapp_backend/                   ← Flask backend
-│   ├── Dockerfile
-│   ├── entrypoint.sh
-│   ├── requirements.txt
-│   ├── run.py
-│   └── app/
-│       ├── __init__.py
-│       ├── routes.py
-│       ├── models.py
-│       └── auth.py
-│
-└── taskapp_frontend/                  ← React frontend
-    ├── Dockerfile
-    ├── nginx.conf
-    ├── package.json
-    └── src/
-        ├── main.tsx
-        ├── App.tsx
-        ├── components/
-        ├── contexts/
-        ├── pages/
-        ├── services/
-        └── types/
+cat > scripts/export-env.sh << 'EOF'
+export KOPS_CLUSTER_NAME=k8s.task-app.online
+export KOPS_STATE_STORE=s3://taskapp-kops-state-755077304796
+export AWS_REGION=us-east-1
+export DOMAIN_NAME=task-app.online
+export ECR_REGISTRY=755077304796.dkr.ecr.us-east-1.amazonaws.com
+EOF
+
+source scripts/export-env.sh
 ```
-
----
-
-## ✨ Features
-
-### Local Development
-- ✅ Docker Compose setup with PostgreSQL, Flask, React
-- ✅ Automatic database initialization
-- ✅ Health checks and networking
-- ✅ Development guides and troubleshooting
-
-### Application
-- ✅ User authentication (signup/login)
-- ✅ Task management (create, read, update, delete)
-- ✅ Kanban board (To Do, In Progress, Done)
-- ✅ Responsive React frontend
-- ✅ RESTful Flask API
-
-### AWS Deployment
-- ✅ 20-section comprehensive deployment guide
-- ✅ Terraform infrastructure as code
-- ✅ Kubernetes cluster with Kops
-- ✅ SSL/TLS with Let's Encrypt
-- ✅ Node hardening with Ansible
-- ✅ Cost analysis and cleanup procedures
-
----
-
-## 🎯 Getting Started
-
-### Step 1: Local Testing
-1. Read: [docs/START_HERE.md](docs/START_HERE.md)
-2. Run: `docker-compose up -d`
-3. Test: http://localhost:3000
-
-### Step 2: AWS Deployment
-1. Read: [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md)
-2. Follow: [docs/guide/00-overview.md](docs/guide/00-overview.md) through [docs/guide/19-final-checklist.md](docs/guide/19-final-checklist.md)
-
-### Step 3: Submission
-1. Complete: All validation tests
-2. Review: Final checklist
-3. Submit: Your capstone project
-
----
-
-## 🔧 Quick Commands
-
-```powershell
-# Start services
-docker-compose up -d
-
-# Stop services
-docker-compose down
-
-# View status
-docker-compose ps
-
-# View logs
-docker-compose logs backend
-
-# Restart services
-docker-compose restart
-
-# Rebuild and restart
-docker-compose up -d --build
+### 3. Create Kubernetes Cluster
+### Create cluster with kops
 ```
+kops create cluster \
+  --name=${KOPS_CLUSTER_NAME} \
+  --state=${KOPS_STATE_STORE} \
+  --zones=us-east-1a,us-east-1b,us-east-1c \
+  --master-zones=us-east-1a,us-east-1b,us-east-1c \
+  --node-count=3 \
+  --node-size=t3.medium \
+  --master-size=t3.medium \
+  --networking=calico \
+  --topology=public \
+  --ssh-public-key=~/.ssh/id_rsa.pub
 
----
+# Apply cluster configuration
+kops update cluster --name=${KOPS_CLUSTER_NAME} --state=${KOPS_STATE_STORE} --yes
 
-## 📋 Requirements
-
-### Local Development
-- Docker Desktop (4GB+ RAM)
-- Windows 10/11 with WSL 2
-- PowerShell or Command Prompt
-
-### AWS Deployment
-- AWS account with billing enabled
-- Domain name (e.g., benbolpharmacy.com)
-- ~$332/month for AWS resources
-- 2-3 hours for complete deployment
-
----
-
-## 🐛 Troubleshooting
-
-### Docker won't start
-→ Open Docker Desktop, wait 30 seconds, try again
-
-### Port already in use
-```powershell
-netstat -ano | findstr :3000
-taskkill /PID [PID] /F
-docker-compose up -d
+# Validate cluster
+kops validate cluster --wait 300s
 ```
+<img width="748" height="443" alt="image" src="https://github.com/user-attachments/assets/b1015262-597a-4290-bce2-7ebaa1ba0bf4" />
 
-### Frontend shows blank page
-→ Clear browser cache (Ctrl+Shift+Delete), refresh (F5)
+ 
+Figure 5: Kops validate cluster showing all nodes ready
 
-### Need more help?
-→ Read [docs/LOCAL_DEVELOPMENT_SETUP.md](docs/LOCAL_DEVELOPMENT_SETUP.md) troubleshooting section
+### 4. Deploy Application
+#### Create ECR repositories
+```
+aws ecr create-repository --repository-name taskapp/frontend --region $AWS_REGION
+aws ecr create-repository --repository-name taskapp/backend --region $AWS_REGION
 
----
+# Build and push images
+cd taskapp_frontend
+docker build -t ${ECR_REGISTRY}/taskapp/frontend:v1.0 .
+docker push ${ECR_REGISTRY}/taskapp/frontend:v1.0
 
-## 📚 Documentation Index
+cd ../taskapp_backend
+docker build -t ${ECR_REGISTRY}/taskapp/backend:v1.0 .
+docker push ${ECR_REGISTRY}/taskapp/backend:v1.0
 
-| Document | Purpose | Time |
-|----------|---------|------|
-| [docs/START_HERE.md](docs/START_HERE.md) | Quick start | 2 min |
-| [docs/QUICK_START.md](docs/QUICK_START.md) | Essential commands | 2 min |
-| [docs/STEP_BY_STEP_VISUAL.md](docs/STEP_BY_STEP_VISUAL.md) | Visual guide | 5 min |
-| [docs/LOCAL_DEVELOPMENT_SETUP.md](docs/LOCAL_DEVELOPMENT_SETUP.md) | Detailed setup | 10 min |
-| [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) | AWS overview | 5 min |
-| [docs/guide/00-overview.md](docs/guide/00-overview.md) | Architecture | 10 min |
-| [docs/guide/01-prerequisites.md](docs/guide/01-prerequisites.md) through [docs/guide/19-final-checklist.md](docs/guide/19-final-checklist.md) | AWS deployment | 3-4 hours |
-| [docs/SUBDOMAIN_SETUP_GUIDE.md](docs/SUBDOMAIN_SETUP_GUIDE.md) | Subdomain setup | 5 min |
-| [docs/INDEX.md](docs/INDEX.md) | Complete index | 5 min |
+# Deploy to Kubernetes
+cd ../k8s/base
+kubectl apply -f namespace.yaml
+kubectl apply -f configmap.yaml
+kubectl apply -f secrets.yaml
+kubectl apply -f postgres-statefulset.yaml
+kubectl apply -f backend-deployment.yaml
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f services.yaml
+kubectl apply -f ingress.yaml
+```
+<img width="1664" height="385" alt="image" src="https://github.com/user-attachments/assets/79110a1b-374d-4dc8-a70c-2d4ec795fe09" />
 
----
+<img width="1706" height="634" alt="image" src="https://github.com/user-attachments/assets/fc392768-dcc6-43a1-a7c1-ecf466db7783" />
 
-## ✅ Status
+Figure 6: Pod Deployment Across AZs
+All pods running across multiple availability zones
 
-- ✅ Local development environment: Ready
-- ✅ All features tested and working
-- ✅ AWS deployment guide: Complete (20 sections)
-- ✅ Documentation: Comprehensive
-- ✅ Ready for deployment
+### 5. Configure DNS
+### Get ingress ELB address
+```
+INGRESS_ELB=$(kubectl get ingress taskapp-ingress -n taskapp -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+```
+# Create Route53 records 
+```
+aws route53 change-resource-record-sets \
+  --hosted-zone-id YOUR_HOSTED_ZONE_ID \
+  --change-batch file://dns-records.json
+```
+<img width="1361" height="750" alt="image" src="https://github.com/user-attachments/assets/873e3e5f-7fd9-42c1-9b20-e1f5ae66a2e8" />
 
----
 
-## 🎓 Learning Outcomes
+<img width="1342" height="727" alt="image" src="https://github.com/user-attachments/assets/4845e035-9fd5-4453-a0f0-c0bbf8754436" />
 
-By completing this project, you will learn:
-- Docker containerization and Docker Compose
-- AWS account setup and IAM
-- Terraform infrastructure as code
-- Kubernetes cluster management
-- Kops for Kubernetes operations
-- SSL/TLS with Let's Encrypt
-- Ansible for infrastructure automation
-- Production deployment best practices
+### 6. Verify Deployment
+```
+# Check all pods running
+kubectl get pods -n taskapp -o wide
 
----
+# Test frontend
+curl -I https://task-app.online
 
-## 📞 Support
+# Test backend API
+curl https://api.task-app.online/api/health
+```
+<img width="1488" height="361" alt="image" src="https://github.com/user-attachments/assets/5763b106-2215-4b0d-b7c3-826e05898cc1" />
 
-### For Local Development Issues
-- Check: [docs/LOCAL_DEVELOPMENT_SETUP.md](docs/LOCAL_DEVELOPMENT_SETUP.md) troubleshooting
-- Read: [docs/FIXES_APPLIED.md](docs/FIXES_APPLIED.md)
+### 7. Database Persistence
 
-### For AWS Deployment Issues
-- Check: Specific guide section (e.g., [docs/guide/09-kops-cluster.md](docs/guide/09-kops-cluster.md))
-- Read: [docs/guide/16-validation.md](docs/guide/16-validation.md)
 
-### For General Questions
-- Docker: https://docs.docker.com/
-- AWS: https://docs.aws.amazon.com/
-- Kubernetes: https://kubernetes.io/docs/
-- Terraform: https://www.terraform.io/docs/
+### 8. Terraform Executes without Errors
 
----
+<img width="1265" height="967" alt="image" src="https://github.com/user-attachments/assets/19c61dfe-b048-4983-bea0-fb98793cdaa1" />
 
-## 🚀 Ready to Start?
+<img width="905" height="955" alt="image" src="https://github.com/user-attachments/assets/5da1861c-a735-4073-8540-29e6608a1d88" />
 
-**Choose your path:**
+### 9. All sensitive values encrypted or externalized (no plaintext passwords in repo)
+<img width="1898" height="784" alt="image" src="https://github.com/user-attachments/assets/430996b4-7031-45e5-bc9d-658096384f79" />
 
-### 👤 First Time?
-→ Read [docs/START_HERE.md](docs/START_HERE.md) (2 minutes)
+### 10. Cost Estimate.
 
-### 🔧 Want Detailed Setup?
-→ Read [docs/LOCAL_DEVELOPMENT_SETUP.md](docs/LOCAL_DEVELOPMENT_SETUP.md) (10 minutes)
+<img width="892" height="498" alt="image" src="https://github.com/user-attachments/assets/c376686e-08df-4b6e-b857-aec809871d86" />
 
-### ☁️ Ready for AWS?
-→ Read [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) (5 minutes)
+📄 License:
+MIT License 
+👤 Author
+Olaoluwa Afolami
+Capstone Project - Cloud Engineering
+April 2026
 
-### 📖 Want Complete Overview?
-→ Read [docs/INDEX.md](docs/INDEX.md) (5 minutes)
-
----
-
-**Good luck with your capstone project! 🚀**
-
-*Last Updated: March 27, 2026*  
-*Status: ✅ Complete and Ready*
