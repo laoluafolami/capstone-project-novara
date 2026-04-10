@@ -36,8 +36,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (username: string, password: string) => {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL || '/api'}/auth/login`,
+      `${apiUrl}/auth/login`,
       {
         method: 'POST',
         headers: {
@@ -60,8 +61,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signup = async (username: string, password: string) => {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/signup`,
+      `${apiUrl}/auth/signup`,
       {
         method: 'POST',
         headers: {

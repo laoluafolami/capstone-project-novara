@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:15.5-alpine
+    container_name: taskapp-postgres
+    environment:
+      POSTGRES_USER: taskapp_user
+      POSTGRES_PASSWORD: taskapp_password
+      POSTGRES_DB: taskapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taskapp_user -d taskapp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - taskapp-network
+
+  backend:
+    build:
+      context: ./taskapp_backend
+      dockerfile: Dockerfile
+    container_name: taskapp-backend
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: taskapp
+      DATABASE_USER: taskapp_user
+      DATABASE_PASSWORD: taskapp_password
+      SECRET_KEY: dev-secret-key-change-in-production
+      FLASK_ENV: production
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - taskapp-network
+
+  frontend:
+    build:
+      context: ./taskapp_frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:5000/api
+    container_name: taskapp-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - taskapp-network
+
+volumes:
+  postgres-data:
+
+networks:
+  taskapp-network:
+    driver: bridge
