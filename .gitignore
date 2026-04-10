@@ -1,0 +1,32 @@
+# Terraform state — NEVER commit these
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+
+# Secrets
+*.pem
+*.key
+kubeconfig
+.env
+.env.*
+!.env.example
+
+# Kops
+kops-state/
+
+# OS
+.DS_Store
+*.swp
+
+# Node modules
+taskapp_frontend/node_modules/
+taskapp_frontend/dist/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
