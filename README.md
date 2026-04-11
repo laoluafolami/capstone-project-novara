@@ -248,9 +248,23 @@ curl https://api.task-app.online/api/health
 ### 9. All sensitive values encrypted or externalized (no plaintext passwords in repo)
 <img width="1898" height="784" alt="image" src="https://github.com/user-attachments/assets/430996b4-7031-45e5-bc9d-658096384f79" />
 
-### 10. Cost Estimate.
+### 10. SSL Certificate Valid and Auto-Renewing
+<img width="986" height="127" alt="image" src="https://github.com/user-attachments/assets/e241041e-a644-466c-b4cc-7ef2642650a4" />
+
+Figure 10: SSL Certificates Valid
+ 
+ ### 11. Database Persists Data Through Pod Deletion
+ 
+ <img width="1146" height="162" alt="image" src="https://github.com/user-attachments/assets/a4d6994a-c132-41e0-8c2e-ad822d728d2e" />
+
+ Figure 11: PostgreSQL Persistent Storage
+
+ ### 12. Cost Estimate.
 
 <img width="892" height="498" alt="image" src="https://github.com/user-attachments/assets/c376686e-08df-4b6e-b857-aec809871d86" />
+
+<img width="836" height="587" alt="image" src="https://github.com/user-attachments/assets/c375654b-167a-42d0-9bf6-8f37605a87a8" />
+
 
 📄 License:
 MIT License 
