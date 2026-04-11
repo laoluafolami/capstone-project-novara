@@ -102,6 +102,10 @@ Design, build, and deploy a highly available, secure, and scalable Kubernetes cl
 ### High-Level Architecture
 
 <img width="1650" height="870" alt="image" src="https://github.com/user-attachments/assets/32dc205b-5343-45d8-8356-0c9625fe94be" />
+**Figure 4: System Architecture Diagram**
+Complete system architecture showing component interactions*
+
+For detailed architecture, see [docs/architecture.md](docs/architecture.md).
 
 **Network Flow:**
 1. User accesses `https://task-app.online`
@@ -110,8 +114,8 @@ Design, build, and deploy a highly available, secure, and scalable Kubernetes cl
 4. Ingress routes `/api/*` to backend-service, `/` to frontend-service
 5. Backend connects to PostgreSQL via ClusterIP service
 
-**Figure 4: System Architecture Diagram**
-![Architecture Diagram](screenshots/architecture/architecture-diagram.png)
+
+
 *Complete system architecture showing component interactions*
 
 For detailed architecture, see [docs/architecture.md](docs/architecture.md).
