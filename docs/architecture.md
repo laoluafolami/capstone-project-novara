@@ -1,8 +1,3 @@
-
-### Step 3: Create docs/architecture.md
-
-```bash
-cat > docs/architecture.md << 'ENDOFARCH'
 # TaskApp - System Architecture Documentation
 
 **Document Version:** 1.0  
