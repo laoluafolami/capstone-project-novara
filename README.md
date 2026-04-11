@@ -1,10 +1,12 @@
-# TaskApp - Cloud-Native Task Management Platform
-
+# TaskApp 
+  
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-1.28-blue?logo=kubernetes)](https://kubernetes.io)
 [![SSL](https://img.shields.io/badge/SSL-Let's%20Encrypt-green)](https://letsencrypt.org)
 [![HA](https://img.shields.io/badge/High%20Availability-Multi--AZ-orange)]()
 
-**Capstone Project: Production-Grade AWS Kubernetes Infrastructure**
+- Live URL at https://task-app.online
+
+## **Capstone Project: Production-Grade AWS Kubernetes Infrastructure**
 
 A production-grade, cloud-native task management application deployed on AWS with Infrastructure as Code, automated SSL certificates, multi-AZ resilience, and enterprise-grade security.
 
