@@ -25,7 +25,7 @@ A production-grade, cloud-native task management application deployed on AWS wit
 - [Validation Evidence](#validation-evidence)
 - [Documentation](#documentation)
 - [Cost Analysis](#cost-analysis)
-- [Submission Checklist](#submission-checklist)
+- [Troubleshooting](#Troubleshooting)
 
 ---
 
