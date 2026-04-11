@@ -16,8 +16,6 @@
 3. [Detailed Resource Costs](#detailed-resource-costs)
 4. [Monthly Cost Estimation](#monthly-cost-estimation)
 5. [Cost Optimization Strategies](#cost-optimization-strategies)
-6. [AWS Pricing Calculator Screenshots](#aws-pricing-calculator-screenshots)
-7. [Cleanup & Cost Management](#cleanup--cost-management)
 
 ---
 
