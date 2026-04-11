@@ -10,7 +10,9 @@ A production-grade, cloud-native task management application deployed on AWS wit
 
 
 <img width="1710" height="772" alt="image" src="https://github.com/user-attachments/assets/df0e4fbc-b1f4-4985-84d2-3620e1727655" />
-*Figure 1: TaskApp frontend with HTTPS green padlock at https://task-app.online*
+<img width="1789" height="721" alt="image" src="https://github.com/user-attachments/assets/11de5565-37d3-418b-90be-e96b034d7f6f" />
+
+*Figure 1: TaskApp frontend with HTTPS (SSL certificate) at https://task-app.online*
 
 ---
 
